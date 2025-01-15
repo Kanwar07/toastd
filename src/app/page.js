@@ -1,4 +1,4 @@
-import Reels from "@/pages/Reels";
+import Reels from "../app/pages/Reels";
 
 export default function Home() {
   return (
