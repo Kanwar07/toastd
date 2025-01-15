@@ -9,7 +9,13 @@ export function ContextProvider({ children }) {
 
   useEffect(() => {
     const fetchdata = async () => {
-      const response = await fetch("https://toastd.in/api/file/tapes");
+      //const response = await fetch("https://toastd.in/api/file/tapes");
+      const response = await fetch("https://toastd.in/api/file/tapes", {
+        method: "GET",
+        headers: {
+          "Cache-Control": "no-cache",
+        },
+      });
       const reelsdate = await response.json();
       setReels(reelsdate);
     };
