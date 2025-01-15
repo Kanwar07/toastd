@@ -1,5 +1,3 @@
-"use client";
-
 import { ContextData } from "../context/Context";
 import React, { useContext } from "react";
 
