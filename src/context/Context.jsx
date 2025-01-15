@@ -6,26 +6,36 @@ export const ContextData = createContext();
 
 export function ContextProvider({ children }) {
   const [reels, setReels] = useState([]);
+  const [categories, setCategories] = useState([]);
 
   useEffect(() => {
-    const fetchdata = async () => {
+    const fetchreels = async () => {
+      //"https://dummyjson.com/c/65b7-f6c3-44e4-982c
       //const response = await fetch("https://toastd.in/api/file/tapes");
-      const response = await fetch(
-        "https://dummyjson.com/c/f9c8-0b3d-4669-9193",
-        {
-          method: "GET",
-          headers: {
-            "Cache-Control": "no-cache",
-          },
-        }
-      );
+      const response = await fetch("https://toastd.in/api/file/tapes", {
+        method: "GET",
+        headers: {
+          "Cache-Control": "no-cache",
+        },
+      });
       const reelsdate = await response.json();
       setReels(reelsdate);
     };
-    fetchdata();
+    fetchreels();
   }, []);
 
+  useEffect(() => {
+    const fetchcategory = async () => {
+      const response = await fetch("https://toastd.in/api/category");
+      const categoryData = await response.json();
+      setCategories(categoryData);
+    };
+    fetchcategory();
+  });
+
   return (
-    <ContextData.Provider value={{ reels }}>{children}</ContextData.Provider>
+    <ContextData.Provider value={{ reels, categories }}>
+      {children}
+    </ContextData.Provider>
   );
 }
