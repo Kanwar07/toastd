@@ -20,15 +20,15 @@ function Reels() {
   return (
     <div className="snap-y snap-mandatory h-screen overflow-y-scroll hide-scrollbar scroll-smooth md:max-w-lg md:mx-auto bg-black">
       {reels.map((reel) => {
-        const { id, url } = reel;
+        const { id, videoUrl } = reel;
         return (
-          <div key={id} className="h-screen snap-center">
+          <div key={id} className="h-screen snap-center bg-[#ffffff]">
             <video
-              src={`https://assets.toastd.in/${url}?${new Date().getTime()}`}
+              src={`${videoUrl}?${new Date().getTime()}`}
               loop
               autoPlay
               muted
-              className="w-full h-screen object-cover"
+              className="h-screen object-fit"
             ></video>
           </div>
         );
