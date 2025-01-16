@@ -20,7 +20,7 @@ function Footer() {
           <Link href="/">
             <Image src={home} alt="home" className="cursor-pointer size-12" />
           </Link>
-          <Link href="/reels">
+          <Link href="/reel">
             <Image src={reels} alt="reels" className="cursor-pointer size-8" />
           </Link>
         </div>
