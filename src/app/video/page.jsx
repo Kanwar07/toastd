@@ -6,7 +6,7 @@ import mute from "../assets/mute.svg";
 import unmute from "../assets/unmute.svg";
 import Link from "next/link";
 
-function Video() {
+function page() {
   const { reels } = useContext(ContextData);
   const videoRefs = useRef({});
   const buttonRefs = useRef({});
@@ -112,4 +112,4 @@ function Video() {
   );
 }
 
-export default Video;
+export default page;
