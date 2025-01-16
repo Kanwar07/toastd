@@ -1,15 +1,20 @@
 "use client";
 
-import { useContext, useEffect, useRef } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import { ContextData } from "../../context/Context";
 import mute from "../assets/mute.svg";
 import unmute from "../assets/unmute.svg";
 import Link from "next/link";
+import home from "../assets/home.png";
+import Image from "next/image";
+import like from "../assets/like.json";
+import Lottie from "react-lottie";
 
 function Reels() {
   const { reels } = useContext(ContextData);
   const videoRefs = useRef({});
   const buttonRefs = useRef({});
+  const likedRef = useRef({});
 
   useEffect(() => {
     const options = {
@@ -67,11 +72,18 @@ function Reels() {
     }
   };
 
+  const toggleLike = (id) => {
+    if (likedRef.current[id]) {
+      const isLiked = likedRef.current[id].textContent === "Liked";
+
+      likedRef.current[id].textContent = isLiked ? "Like" : "Liked";
+    }
+  };
   return (
     <div className="snap-y snap-mandatory h-screen overflow-y-scroll hide-scrollbar scroll-smooth md:max-w-lg md:mx-auto bg-black">
       {reels.length !== 0 ? (
         reels.map((reel) => {
-          const { id, url } = reel;
+          const { id, videoUrl } = reel;
           return (
             <div
               key={id}
@@ -80,15 +92,19 @@ function Reels() {
             >
               <video
                 ref={(currentVideo) => (videoRefs.current[id] = currentVideo)}
-                src={`https://assets.toastd.in/${url}?${new Date().getTime()}`}
+                src={`${videoUrl}?${new Date().getTime()}`}
                 loop
                 autoPlay
                 muted
                 className="h-screen object-fit"
               ></video>
-              <div className="flex flex-row gap-2 z-50 top-0 absolute">
-                <Link href="/" className="text-[#ffffff] cursor-pointer">
-                  Home
+              <div className="flex flex-row gap-2 z-50 top-6 left-6 absolute">
+                <Link href="/" className="cursor-pointer">
+                  <Image
+                    src={home}
+                    alt="home"
+                    className="cursor-pointer size-12 max-sm:size-10 bg-[#ffffff] rounded-full p-2"
+                  />
                 </Link>
                 <button
                   ref={(currentButton) =>
@@ -101,6 +117,21 @@ function Reels() {
                 >
                   Unmute
                 </button>
+              </div>
+              <div className="flex flex-col items-end gap-2 z-50 right-6 bottom-10 absolute">
+                <button
+                  ref={(currentButton) =>
+                    (likedRef.current[id] = currentButton)
+                  }
+                  onClick={(event) => {
+                    event.stopPropagation();
+                    toggleLike(id);
+                  }}
+                >
+                  Like
+                </button>
+
+                <button>Share</button>
               </div>
             </div>
           );
