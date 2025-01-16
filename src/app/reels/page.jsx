@@ -1,6 +1,6 @@
 "use client";
 
-import { useContext, useEffect, useRef, useState } from "react";
+import { useContext, useEffect, useRef } from "react";
 import { ContextData } from "../../context/Context";
 import mute from "../assets/mute.svg";
 import unmute from "../assets/unmute.svg";
@@ -130,7 +130,6 @@ function page() {
                 >
                   Like
                 </button>
-
                 <button>Share</button>
               </div>
             </div>

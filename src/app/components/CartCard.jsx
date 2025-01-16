@@ -1,6 +1,7 @@
+"use client";
+
 import React, { useContext } from "react";
 import { ContextData } from "../../context/Context";
-import Image from "next/image";
 
 function CartCard({ product }) {
   const { updateQuantity } = useContext(ContextData);
