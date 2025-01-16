@@ -13,61 +13,63 @@ import NavModal from "../components/NavModal";
 import Footer from "../Footer";
 
 function page() {
-  const { handlenavOpen, cartquantity } = useContext(ContextData);
+  const { handleNavOpen, cartquantity } = useContext(ContextData);
 
   return (
     <div className="h-screen w-full relative flex flex-col justify-between">
-      <div className="bg-[#ffffff] h-screen w-full">
-        <div className="sticky z-50 absolute top-0 flex flex-row justify-around items-center py-6 bg-[#ffffff]">
-          <div className="flex flex-row gap-8 max-sm:gap-5">
-            <Image
-              src={menuicon}
-              alt="Menu"
-              className="cursor-pointer size-8 max-sm:size-5"
-              onClick={handlenavOpen}
-            />
-            <Image
-              src={searchiconmobile}
-              alt="Search"
-              className="cursor-pointer size-8 max-sm:size-5"
-            />
-          </div>
-          <Link href="/">
-            <Image
-              src={logo}
-              alt="Toastd"
-              className="cursor-pointer w-[240px] max-sm:w-[140px]"
-            />
-          </Link>
-          <div className="flex flex-row gap-8 max-sm:gap-5">
-            <Link href="/account">
+      <div className="flex flex-col items-center">
+        <div className="w-1/2 max-md:w-full h-screen">
+          <div className="sticky z-50 absolute top-0 flex flex-row justify-around items-center py-6 bg-[#ffffff]">
+            <div className="flex flex-row gap-8 max-sm:gap-5">
               <Image
-                src={accounticon}
-                alt="Account"
+                src={menuicon}
+                alt="Menu"
+                className="cursor-pointer size-8 max-sm:size-5"
+                onClick={handleNavOpen}
+              />
+              <Image
+                src={searchiconmobile}
+                alt="Search"
                 className="cursor-pointer size-8 max-sm:size-5"
               />
+            </div>
+            <Link href="/">
+              <Image
+                src={logo}
+                alt="Toastd"
+                className="cursor-pointer w-[240px] max-sm:w-[140px]"
+              />
             </Link>
-            <Link href="/cart">
-              <div className="relative">
+            <div className="flex flex-row gap-8 max-sm:gap-5">
+              <Link href="/account">
                 <Image
-                  src={carticonmobile}
-                  alt="Cart"
+                  src={accounticon}
+                  alt="Account"
                   className="cursor-pointer size-8 max-sm:size-5"
                 />
-                <div className="absolute -top-3 -right-2 text-[#000000]">
-                  {cartquantity}
+              </Link>
+              <Link href="/cart">
+                <div className="relative">
+                  <Image
+                    src={carticonmobile}
+                    alt="Cart"
+                    className="cursor-pointer size-8 max-sm:size-5"
+                  />
+                  <div className="absolute -top-3 -right-2 text-[#000000]">
+                    {cartquantity}
+                  </div>
                 </div>
-              </div>
-            </Link>
+              </Link>
+            </div>
           </div>
+          <div className="flex items-center w-full justify-center bg-[#ffffff] text-[#000000] text-[24px]">
+            Coming Soon...
+          </div>
+          <NavModal />
         </div>
-        <div className="flex items-center w-full justify-center bg-[#ffffff] text-[#000000] text-[24px] pt-20">
-          Coming Soon...
+        <div className="sticky absolute w-screen bottom-0">
+          <Footer />
         </div>
-        <NavModal />
-      </div>
-      <div className="sticky absolute w-screen bottom-0">
-        <Footer />
       </div>
     </div>
   );

@@ -15,7 +15,7 @@ import Link from "next/link";
 import Footer from "../Footer";
 
 function page() {
-  const { cartdata, handlenavOpen, orderconfirm, total, cartquantity } =
+  const { cartdata, handleNavOpen, orderconfirm, total, cartquantity } =
     useContext(ContextData);
 
   return (
@@ -28,7 +28,7 @@ function page() {
                 src={menuicon}
                 alt="Menu"
                 className="cursor-pointer size-8 max-sm:size-5"
-                onClick={handlenavOpen}
+                onClick={handleNavOpen}
               />
               <Image
                 src={searchiconmobile}
@@ -91,9 +91,12 @@ function page() {
                 </motion.div>
               )}
               <div className="flex flex-row justify-between max-md:flex-col items-center">
-                <div className="text-[#000000] text-[20px] font-bold">
-                  Cart Total: ${total}
-                </div>
+                {cartdata.length !== 0 ? (
+                  <div className="text-[#000000] text-[20px] font-bold">
+                    Cart Total: ${total}
+                  </div>
+                ) : null}
+
                 <div className="flex justify-center items-center mx-10 my-2 text-[#000000] text-[18px]">
                   {cartdata.length !== 0 ? (
                     <button

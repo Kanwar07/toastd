@@ -19,7 +19,7 @@ import { motion } from "framer-motion";
 function HomePage() {
   const {
     categories,
-    handlenavOpen,
+    handleNavOpen,
     cartdata,
     getcarddata,
     removeCartItems,
@@ -72,7 +72,7 @@ function HomePage() {
               src={menuicon}
               alt="Menu"
               className="cursor-pointer size-8 max-sm:size-5"
-              onClick={handlenavOpen}
+              onClick={handleNavOpen}
             />
             <Image
               src={searchiconmobile}
