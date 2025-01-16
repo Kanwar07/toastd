@@ -7,11 +7,39 @@ import unmute from "../assets/unmute.svg";
 import Link from "next/link";
 import home from "../assets/home.png";
 import Image from "next/image";
+import { motion } from "framer-motion";
 
 function page() {
   const { reels } = useContext(ContextData);
   const videoRefs = useRef({});
   const buttonRefs = useRef({});
+
+  const containerVariants = {
+    hidden: {
+      opacity: 0,
+    },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.3,
+        delayChildren: 0.5,
+      },
+    },
+  };
+
+  const itemVariants = {
+    hidden: {
+      opacity: 0,
+      y: 20,
+    },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        duration: 1,
+      },
+    },
+  };
 
   useEffect(() => {
     const options = {
@@ -73,7 +101,7 @@ function page() {
     <div className="snap-y snap-mandatory h-screen overflow-y-scroll hide-scrollbar scroll-smooth md:max-w-lg md:mx-auto bg-black">
       {reels.length !== 0 ? (
         reels.map((reel) => {
-          const { id, videoUrl } = reel;
+          const { id, videoUrl, author } = reel;
           return (
             <div
               key={id}
@@ -108,6 +136,34 @@ function page() {
                   Unmute
                 </button>
               </div>
+              <motion.div
+                variants={containerVariants}
+                initial="hidden"
+                whileInView="visible"
+                viewport={{
+                  once: true,
+                }}
+                className="flex flex-row w-2/3 flex-wrap gap-2 z-50 bottom-20 left-6 absolute"
+              >
+                <motion.span
+                  variants={itemVariants}
+                  className="border-2 border-[#fbb13c] px-3 py-1 rounded-[10px] bg-[#fbb13c] text-[#000000] font-bold"
+                >
+                  {author}
+                </motion.span>
+                <motion.span
+                  variants={itemVariants}
+                  className="border-2 border-[#fbb13c] px-3 py-1 rounded-[10px] bg-[#fbb13c] text-[#000000] font-bold"
+                >
+                  {author}
+                </motion.span>
+                <motion.span
+                  variants={itemVariants}
+                  className="border-2 border-[#fbb13c] px-3 py-1 rounded-[10px] bg-[#fbb13c] text-[#000000] font-bold"
+                >
+                  {author}
+                </motion.span>
+              </motion.div>
             </div>
           );
         })
