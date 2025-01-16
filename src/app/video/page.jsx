@@ -145,24 +145,30 @@ function page() {
                 }}
                 className="flex flex-row w-2/3 flex-wrap gap-2 z-50 bottom-20 left-6 absolute"
               >
-                <motion.span
-                  variants={itemVariants}
-                  className="border-2 border-[#fbb13c] px-3 py-1 rounded-[10px] bg-[#fbb13c] text-[#000000] font-bold"
-                >
-                  {author}
-                </motion.span>
-                <motion.span
-                  variants={itemVariants}
-                  className="border-2 border-[#fbb13c] px-3 py-1 rounded-[10px] bg-[#fbb13c] text-[#000000] font-bold"
-                >
-                  {author}
-                </motion.span>
-                <motion.span
-                  variants={itemVariants}
-                  className="border-2 border-[#fbb13c] px-3 py-1 rounded-[10px] bg-[#fbb13c] text-[#000000] font-bold"
-                >
-                  {author}
-                </motion.span>
+                <Link href="/">
+                  <motion.span
+                    variants={itemVariants}
+                    className="border-2 border-[#fbb13c] px-3 py-1 rounded-[10px] bg-[#fbb13c] text-[#000000] font-bold"
+                  >
+                    {author}
+                  </motion.span>
+                </Link>
+                <Link href="/">
+                  <motion.span
+                    variants={itemVariants}
+                    className="border-2 border-[#fbb13c] px-3 py-1 rounded-[10px] bg-[#fbb13c] text-[#000000] font-bold"
+                  >
+                    {author}
+                  </motion.span>
+                </Link>
+                <Link href="/">
+                  <motion.span
+                    variants={itemVariants}
+                    className="border-2 border-[#fbb13c] px-3 py-1 rounded-[10px] bg-[#fbb13c] text-[#000000] font-bold"
+                  >
+                    {author}
+                  </motion.span>
+                </Link>
               </motion.div>
             </div>
           );
