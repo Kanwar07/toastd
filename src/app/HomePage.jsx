@@ -102,7 +102,7 @@ function HomePage() {
                   alt="Cart"
                   className="cursor-pointer size-8 max-sm:size-5"
                 />
-                <div className="absolute -top-3 -right-2 text-[#000000]">
+                <div className="absolute font-bold -top-3 -right-3 text-[#000000]">
                   {cartquantity}
                 </div>
               </div>

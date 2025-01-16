@@ -5,6 +5,8 @@ import { ContextData } from "../../context/Context";
 import mute from "../assets/mute.svg";
 import unmute from "../assets/unmute.svg";
 import Link from "next/link";
+import home from "../assets/home.png";
+import Image from "next/image";
 
 function page() {
   const { reels } = useContext(ContextData);
@@ -71,7 +73,7 @@ function page() {
     <div className="snap-y snap-mandatory h-screen overflow-y-scroll hide-scrollbar scroll-smooth md:max-w-lg md:mx-auto bg-black">
       {reels.length !== 0 ? (
         reels.map((reel) => {
-          const { id, url } = reel;
+          const { id, videoUrl } = reel;
           return (
             <div
               key={id}
@@ -80,15 +82,19 @@ function page() {
             >
               <video
                 ref={(currentVideo) => (videoRefs.current[id] = currentVideo)}
-                src={`https://assets.toastd.in/${url}?${new Date().getTime()}`}
+                src={`${videoUrl}?${new Date().getTime()}`}
                 loop
                 autoPlay
                 muted
                 className="h-screen object-fit"
               ></video>
-              <div className="flex flex-row gap-2 z-50 top-0 absolute">
-                <Link href="/" className="text-[#ffffff] cursor-pointer">
-                  Home
+              <div className="flex flex-row gap-2 z-50 top-6 left-6 absolute">
+                <Link href="/" className="cursor-pointer">
+                  <Image
+                    src={home}
+                    alt="home"
+                    className="cursor-pointer size-12 max-sm:size-10 bg-[#ffffff] rounded-full p-2"
+                  />
                 </Link>
                 <button
                   ref={(currentButton) =>

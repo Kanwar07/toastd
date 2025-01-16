@@ -140,7 +140,7 @@ export function ContextProvider({ children }) {
     settotal(0);
   };
 
-  const handlenavOpen = () => {
+  const handleNavOpen = () => {
     setOpenNavModal(true);
   };
 
@@ -153,7 +153,7 @@ export function ContextProvider({ children }) {
       value={{
         reels,
         categories,
-        handlenavOpen,
+        handleNavOpen,
         handleNavClose,
         openNavModal,
         cartdata,
