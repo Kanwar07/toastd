@@ -2,8 +2,6 @@
 
 import { useContext, useEffect, useRef } from "react";
 import { ContextData } from "../../context/Context";
-import mute from "../assets/mute.svg";
-import unmute from "../assets/unmute.svg";
 import Link from "next/link";
 import home from "../assets/home.png";
 import Image from "next/image";
