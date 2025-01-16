@@ -10,7 +10,7 @@ import Image from "next/image";
 import like from "../assets/like.json";
 import Lottie from "react-lottie";
 
-function Reels() {
+function page() {
   const { reels } = useContext(ContextData);
   const videoRefs = useRef({});
   const buttonRefs = useRef({});
@@ -143,4 +143,4 @@ function Reels() {
   );
 }
 
-export default Reels;
+export default page;
