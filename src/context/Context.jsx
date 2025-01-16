@@ -9,23 +9,31 @@ export function ContextProvider({ children }) {
   const [reels, setReels] = useState([]);
   const [categories, setCategories] = useState([]);
   const [openNavModal, setOpenNavModal] = useState(false);
-  const [cartdata, setCartData] = useState([]);
-  const [total, setTotal] = useState(0);
-  const [cartquantity, setCartQuantity] = useState(0);
+  const [cartdata, setcartdata] = useState([]);
+  const [total, settotal] = useState([]);
+  const [cartquantity, setcartquantity] = useState(0);
 
   useEffect(() => {
-    const fetchReels = async () => {
+    const fetchreels = async () => {
+      //"https://dummyjson.com/c/65b7-f6c3-44e4-982c
+      //const response = await fetch("https://toastd.in/api/file/tapes");
       const response = await fetch(
-        "https://dummyjson.com/c/65b7-f6c3-44e4-982c"
+        "https://dummyjson.com/c/65b7-f6c3-44e4-982c",
+        {
+          method: "GET",
+          headers: {
+            "Cache-Control": "no-cache",
+          },
+        }
       );
-      const reelsDate = await response.json();
-      setReels(reelsDate);
+      const reelsdate = await response.json();
+      setReels(reelsdate);
     };
-    fetchReels();
+    fetchreels();
   }, []);
 
   useEffect(() => {
-    const fetchCategory = async () => {
+    const fetchcategory = async () => {
       const response = await fetch("https://dummyjson.com/products");
       const data = await response.json();
       const dataWithQuantity = data.products.map((item) => ({
@@ -34,50 +42,42 @@ export function ContextProvider({ children }) {
       }));
       setCategories(dataWithQuantity);
     };
-    fetchCategory();
+    fetchcategory();
   }, []);
 
   useEffect(() => {
     if (typeof window !== "undefined") {
-      try {
-        const cartDataFromStorage = JSON.parse(
-          localStorage.getItem("cart") || "[]"
-        );
-        const cartTotalFromStorage =
-          parseFloat(localStorage.getItem("total")) || 0;
+      const cartdatafromstorage = JSON.parse(
+        localStorage.getItem("cart") || "[]"
+      );
+      const carttotalfromstorage =
+        parseFloat(localStorage.getItem("total")) || 0;
 
-        setCartData(cartDataFromStorage);
-        setTotal(cartTotalFromStorage);
-      } catch (error) {
-        console.error("Error loading data from localStorage:", error);
-        setCartData([]);
-        setTotal(0);
-      }
+      setcartdata(cartdatafromstorage);
+      settotal(carttotalfromstorage);
     }
   }, []);
 
   useEffect(() => {
-    const totalCartQuantity = cartdata.reduce(
+    let totalcartquantity = cartdata.reduce(
       (total, item) => total + item.quantity,
       0
     );
-    setCartQuantity(totalCartQuantity);
+    setcartquantity(totalcartquantity);
   }, [cartdata]);
 
-  const getCardData = (id, price) => {
-    if (itemsInCart(id)) {
+  const getcarddata = (id, price) => {
+    if (itemsinCart(id)) {
       toast.error("Item Already in Cart");
     } else {
       const foundProduct = categories.find((product) => product.id === id);
       const parsedTotal = parseFloat(total);
       const newTotal = parsedTotal + price;
       const updatedCartData = [...cartdata, foundProduct];
-
-      setCartData(updatedCartData);
+      setcartdata(updatedCartData);
       localStorage.setItem("cart", JSON.stringify(updatedCartData));
-      setTotal(newTotal.toFixed(2));
+      settotal(newTotal.toFixed(2));
       localStorage.setItem("total", newTotal.toFixed(2));
-
       toast("Item added to cart, Kindly increase the quantity in Cart", {
         icon: "👏",
         style: {
@@ -89,22 +89,20 @@ export function ContextProvider({ children }) {
     }
   };
 
-  const itemsInCart = (id) => {
+  const itemsinCart = (id) => {
     return cartdata.some((item) => item.id === id);
   };
 
   const removeCartItems = (id) => {
-    const updatedCart = cartdata.filter((item) => item.id !== id);
-    const updatedTotal = updatedCart
+    let updatedCart = cartdata.filter((item) => item.id !== id);
+    let updatedTotal = updatedCart
       .map((item) => item.price * item.quantity)
       .reduce((total, n) => total + n, 0)
       .toFixed(2);
-
-    setCartData(updatedCart);
+    setcartdata(updatedCart);
     localStorage.setItem("cart", JSON.stringify(updatedCart));
-    setTotal(updatedTotal);
-    localStorage.setItem("total", updatedTotal);
-
+    settotal(updatedTotal);
+    localStorage.setItem("total", JSON.stringify(updatedTotal));
     toast("Item removed from cart", {
       icon: "👏",
       style: {
@@ -119,32 +117,30 @@ export function ContextProvider({ children }) {
     if (value === 0) {
       removeCartItems(id);
     } else {
-      const updatedCart = cartdata.map((item) =>
+      let updatedCart = cartdata.map((item) =>
         item.id === id ? { ...item, quantity: value } : item
       );
-      const updatedTotal = updatedCart
+      let updatedTotal = updatedCart
         .map((item) => item.price * item.quantity)
-        .reduce((total, n) => total + n, 0)
+        .reduce((total, n) => total + n)
         .toFixed(2);
-
-      setCartData(updatedCart);
+      setcartdata(updatedCart);
       localStorage.setItem("cart", JSON.stringify(updatedCart));
-      setTotal(updatedTotal);
+      settotal(updatedTotal);
       localStorage.setItem("total", updatedTotal);
     }
   };
 
-  const orderConfirm = () => {
+  const orderconfirm = () => {
     localStorage.removeItem("cart");
     localStorage.removeItem("total");
     localStorage.removeItem("cartquantity");
-
     toast.success("Order Confirmed");
-    setCartData([]);
-    setTotal(0);
+    setcartdata([]);
+    settotal(0);
   };
 
-  const handleNavOpen = () => {
+  const handlenavOpen = () => {
     setOpenNavModal(true);
   };
 
@@ -157,16 +153,16 @@ export function ContextProvider({ children }) {
       value={{
         reels,
         categories,
-        handleNavOpen,
+        handlenavOpen,
         handleNavClose,
         openNavModal,
         cartdata,
         total,
         cartquantity,
-        getCardData,
+        getcarddata,
         removeCartItems,
         updateQuantity,
-        orderConfirm,
+        orderconfirm,
       }}
     >
       {children}
