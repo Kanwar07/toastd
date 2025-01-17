@@ -16,6 +16,7 @@ function page() {
   const videoRefs = useRef({});
   const buttonRefs = useRef({});
   const likeRefs = useRef({});
+  const animationContainers = useRef({});
 
   useEffect(() => {
     const options = { root: null, threshold: 0.5 };
@@ -73,42 +74,24 @@ function page() {
     if (videoRefs.current[id]) {
       const video = videoRefs.current[id];
       video.liked = !video.liked;
-
       if (likeRefs.current[id]) {
         likeRefs.current[id].textContent = video.liked ? "Liked" : "Like";
       }
+
+      if (video.liked) {
+        const animationContainer = animationContainers.current[id];
+        if (animationContainer) {
+          lottie.loadAnimation({
+            container: animationContainer,
+            renderer: "svg",
+            loop: false,
+            autoplay: true,
+            animationData: likeAnimation,
+          });
+        }
+      }
     }
   };
-
-  useEffect(() => {
-    const handleAnimation = (id) => {
-      if (videoRefs.current[id] && videoRefs.current[id].liked) {
-        const animationContainer = document.createElement("div");
-        animationContainer.className =
-          "absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[100px] h-[100px] z-50";
-        document.body.appendChild(animationContainer);
-
-        const animation = lottie.loadAnimation({
-          container: animationContainer,
-          renderer: "svg",
-          loop: false,
-          autoplay: true,
-          animationData: likeAnimation,
-        });
-
-        animation.addEventListener("complete", () => {
-          animation.destroy();
-          animationContainer.remove();
-        });
-      }
-    };
-
-    Object.keys(videoRefs.current).forEach((id) => {
-      if (videoRefs.current[id].liked) {
-        handleAnimation(id);
-      }
-    });
-  }, []);
 
   const title = "Check this out!";
 
@@ -145,6 +128,12 @@ function page() {
                 muted
                 className="h-screen object-fit"
               ></video>
+              <div
+                ref={(container) =>
+                  (animationContainers.current[id] = container)
+                }
+                className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[100px] h-[100px]"
+              ></div>
               <div className="flex flex-row gap-2 z-50 top-6 left-6 absolute">
                 <Link href="/" className="cursor-pointer">
                   <Image
