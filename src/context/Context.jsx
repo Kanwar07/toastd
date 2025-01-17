@@ -16,10 +16,8 @@ export function ContextProvider({ children }) {
 
   useEffect(() => {
     const fetchreels = async () => {
-      //"https://dummyjson.com/c/65b7-f6c3-44e4-982c
-      //const response = await fetch("https://toastd.in/api/file/tapes");
       const response = await fetch(
-        "https://dummyjson.com/c/65b7-f6c3-44e4-982c",
+        "https://dummyjson.com/c/9075-bc2a-4bf4-a6c0",
         {
           method: "GET",
           headers: {
