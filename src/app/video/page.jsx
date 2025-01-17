@@ -16,7 +16,6 @@ function page() {
   const videoRefs = useRef({});
   const buttonRefs = useRef({});
   const likeRefs = useRef({});
-  const animationContainers = useRef({});
 
   useEffect(() => {
     const options = { root: null, threshold: 0.5 };
@@ -115,12 +114,6 @@ function page() {
                 muted
                 className="h-screen object-fit"
               ></video>
-              <div
-                ref={(container) =>
-                  (animationContainers.current[id] = container)
-                }
-                className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[100px] h-[100px]"
-              ></div>
               <div className="flex flex-row gap-2 z-50 top-6 left-6 absolute">
                 <Link href="/" className="cursor-pointer">
                   <Image
