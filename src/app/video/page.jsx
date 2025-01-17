@@ -77,19 +77,6 @@ function page() {
       if (likeRefs.current[id]) {
         likeRefs.current[id].textContent = video.liked ? "Liked" : "Like";
       }
-
-      if (video.liked) {
-        const animationContainer = animationContainers.current[id];
-        if (animationContainer) {
-          lottie.loadAnimation({
-            container: animationContainer,
-            renderer: "svg",
-            loop: false,
-            autoplay: true,
-            animationData: likeAnimation,
-          });
-        }
-      }
     }
   };
 
