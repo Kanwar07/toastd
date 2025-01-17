@@ -16,8 +16,8 @@ function page() {
   const { handleNavOpen, cartquantity } = useContext(ContextData);
 
   return (
-    <div className="h-screen w-full relative flex flex-col justify-between">
-      <div className="flex flex-col items-center">
+    <div className="h-screen w-full relative flex flex-col">
+      <div className="flex flex-col items-center flex-grow">
         <div className="w-1/2 max-md:w-full h-screen">
           <div className="sticky z-50 absolute top-0 flex flex-row justify-around items-center py-6 bg-[#ffffff]">
             <div className="flex flex-row gap-8 max-sm:gap-5">
@@ -62,7 +62,7 @@ function page() {
               </Link>
             </div>
           </div>
-          <div className="flex items-center w-full justify-center bg-[#ffffff] text-[#000000] text-[24px]">
+          <div className="flex items-center justify-center bg-[#ffffff] text-[#000000] text-[24px]">
             Coming Soon...
           </div>
           <NavModal />

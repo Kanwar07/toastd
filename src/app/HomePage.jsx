@@ -147,7 +147,7 @@ function HomePage() {
                       alt={title}
                       className="size-28 my-2 bg-[#ffffff] rounded-[10px]"
                     />
-                    <div className="flex flex-row">
+                    <div className="flex flex-row justify-between w-full">
                       <span>{title}</span>
                       <Tooltip
                         key={id}
@@ -207,7 +207,7 @@ function HomePage() {
             })}
           </motion.div>
         ) : (
-          <div className="flex items-center pb-20 justify-center bg-[#ffffff] text-[#000000] text-[24px] h-full">
+          <div className="flex justify-center bg-[#ffffff] text-[#000000] text-[24px] h-screen">
             Loading...
           </div>
         )}

@@ -76,7 +76,7 @@ function NavModal() {
             </Link>
             <hr className="h-[1px] w-full bg-[#A9A9A9]" />
             <Link
-              href="/"
+              href="/video"
               onClick={handleClose}
               className="flex flex-row items-center gap-4"
             >
