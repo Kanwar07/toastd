@@ -43,7 +43,7 @@ function page() {
       const video = videoRefs.current[id];
       video.muted = !video.muted;
       if (buttonRefs.current[id]) {
-        buttonRefs.current[id].textContent = video.muted ? "Unmute" : "Mute";
+        buttonRefs.current[id].textContent = video.muted ? "UnMute" : "Mute";
       }
     }
   };
@@ -109,7 +109,6 @@ function page() {
                 src={`${videoUrl}?${new Date().getTime()}`}
                 loop
                 autoPlay
-                muted
                 className="h-screen object-fit"
               ></video>
               <div className="flex flex-row gap-2 z-50 top-6 left-6 absolute">
@@ -129,7 +128,7 @@ function page() {
                     toggleSound(id);
                   }}
                 >
-                  Unmute
+                  Mute
                 </button>
               </div>
               <motion.div
