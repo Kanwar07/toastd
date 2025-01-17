@@ -2,23 +2,15 @@
 
 import { useContext, useEffect, useRef, useState } from "react";
 import { ContextData } from "../../context/Context";
-import mute from "../assets/mute.svg";
-import unmute from "../assets/unmute.svg";
 import Link from "next/link";
 import home from "../assets/home.png";
 import Image from "next/image";
 import { motion } from "framer-motion";
-import {
-  FacebookShareButton,
-  TwitterShareButton,
-  WhatsappShareButton,
-  FacebookIcon,
-  TwitterIcon,
-  WhatsappIcon,
-} from "react-share";
+import ShareModal from "../components/ShareModal";
+import share from "../assets/share.svg";
 
 function page() {
-  const { reels } = useContext(ContextData);
+  const { reels, setOpenShareModal } = useContext(ContextData);
   const videoRefs = useRef({});
   const buttonRefs = useRef({});
   const [shareUrl, setShareUrl] = useState("");
@@ -32,47 +24,26 @@ function page() {
   const title = "Check this out!";
 
   const containerVariants = {
-    hidden: {
-      opacity: 0,
-    },
+    hidden: { opacity: 0 },
     visible: {
       opacity: 1,
-      transition: {
-        staggerChildren: 0.3,
-        delayChildren: 0.5,
-      },
+      transition: { staggerChildren: 0.3, delayChildren: 0.5 },
     },
   };
 
   const itemVariants = {
-    hidden: {
-      opacity: 0,
-      y: 20,
-    },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: {
-        duration: 1,
-      },
-    },
+    hidden: { opacity: 0, y: 20 },
+    visible: { opacity: 1, y: 0, transition: { duration: 1 } },
   };
 
   useEffect(() => {
-    const options = {
-      root: null,
-      threshold: 0.5,
-    };
-
+    const options = { root: null, threshold: 0.5 };
     const observer = new IntersectionObserver((entries) => {
       entries.forEach((entry) => {
         const video = videoRefs.current[entry.target.id];
         if (video) {
-          if (entry.isIntersecting) {
-            video.play();
-          } else {
-            video.pause();
-          }
+          if (entry.isIntersecting) video.play();
+          else video.pause();
         }
       });
     }, options);
@@ -83,9 +54,7 @@ function page() {
 
     return () => {
       Object.values(videoRefs.current).forEach((video) => {
-        if (video) {
-          observer.unobserve(video);
-        }
+        if (video) observer.unobserve(video);
       });
     };
   }, []);
@@ -94,7 +63,6 @@ function page() {
     if (videoRefs.current[id]) {
       const video = videoRefs.current[id];
       video.muted = !video.muted;
-
       if (buttonRefs.current[id]) {
         buttonRefs.current[id].textContent = video.muted ? "Unmute" : "Mute";
       }
@@ -104,11 +72,8 @@ function page() {
   const handleplaypause = (id) => {
     const videoElement = videoRefs.current[id];
     if (videoElement) {
-      if (videoElement.paused) {
-        videoElement.play();
-      } else {
-        videoElement.pause();
-      }
+      if (videoElement.paused) videoElement.play();
+      else videoElement.pause();
     } else {
       console.log("Video element not found.");
     }
@@ -116,6 +81,11 @@ function page() {
 
   const handleShareClick = (event) => {
     event.stopPropagation();
+  };
+
+  const handleShareOpen = (event) => {
+    event.stopPropagation();
+    setOpenShareModal(true);
   };
 
   return (
@@ -161,14 +131,12 @@ function page() {
                 variants={containerVariants}
                 initial="hidden"
                 whileInView="visible"
-                viewport={{
-                  once: true,
-                }}
-                className="flex flex-row w-2/3 flex-wrap gap-2 z-50 bottom-20 left-6 absolute"
+                viewport={{ once: true }}
+                className="flex flex-row w-3/4 flex-wrap gap-2 z-50 bottom-36 left-6 absolute text-[10px]"
               >
                 <Link
                   href="/"
-                  className="hover:scale-105 transition-transform duration-300"
+                  className="hover:scale-105 transition-transform duration-300 mb-2"
                 >
                   <motion.span
                     variants={itemVariants}
@@ -179,7 +147,7 @@ function page() {
                 </Link>
                 <Link
                   href="/"
-                  className="hover:scale-105 transition-transform duration-300"
+                  className="hover:scale-105 transition-transform duration-300 mb-2"
                 >
                   <motion.span
                     variants={itemVariants}
@@ -190,7 +158,7 @@ function page() {
                 </Link>
                 <Link
                   href="/"
-                  className="hover:scale-105 transition-transform duration-300"
+                  className="hover:scale-105 transition-transform duration-300 mb-2"
                 >
                   <motion.span
                     variants={itemVariants}
@@ -200,36 +168,21 @@ function page() {
                   </motion.span>
                 </Link>
               </motion.div>
-              <div className="flex flex-col gap-2 z-50 bottom-20 right-6 absolute">
+              <div className="flex flex-col gap-2 z-50 bottom-36 right-6 absolute">
                 <button>Like</button>
-                <div className="flex space-x-2">
-                  {shareUrl && (
-                    <>
-                      <FacebookShareButton
-                        url={shareUrl}
-                        quote={title}
-                        onClick={handleShareClick}
-                      >
-                        <FacebookIcon size={32} round />
-                      </FacebookShareButton>
-                      <TwitterShareButton
-                        url={shareUrl}
-                        title={title}
-                        onClick={handleShareClick}
-                      >
-                        <TwitterIcon size={32} round />
-                      </TwitterShareButton>
-                      <WhatsappShareButton
-                        url={shareUrl}
-                        title={title}
-                        onClick={handleShareClick}
-                      >
-                        <WhatsappIcon size={32} round />
-                      </WhatsappShareButton>
-                    </>
-                  )}
-                </div>
+                <button onClick={handleShareOpen}>
+                  <Image
+                    src={share}
+                    alt="share"
+                    className="cursor-pointer size-12 max-sm:size-10 bg-[#ffffff] rounded-full p-2"
+                  />
+                </button>
               </div>
+              <ShareModal
+                url={videoUrl}
+                quote={title}
+                onClick={handleShareClick}
+              />
             </div>
           );
         })

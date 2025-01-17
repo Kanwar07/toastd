@@ -9,6 +9,7 @@ export function ContextProvider({ children }) {
   const [reels, setReels] = useState([]);
   const [categories, setCategories] = useState([]);
   const [openNavModal, setOpenNavModal] = useState(false);
+  const [openShareModal, setOpenShareModal] = useState(false);
   const [cartdata, setcartdata] = useState([]);
   const [total, settotal] = useState([]);
   const [cartquantity, setcartquantity] = useState(0);
@@ -148,6 +149,10 @@ export function ContextProvider({ children }) {
     setOpenNavModal(false);
   };
 
+  const handleShareClose = () => {
+    setOpenShareModal(false);
+  };
+
   return (
     <ContextData.Provider
       value={{
@@ -155,10 +160,13 @@ export function ContextProvider({ children }) {
         categories,
         handleNavOpen,
         handleNavClose,
+        handleShareClose,
         openNavModal,
         cartdata,
         total,
         cartquantity,
+        openShareModal,
+        setOpenShareModal,
         getcarddata,
         removeCartItems,
         updateQuantity,
