@@ -13,6 +13,7 @@ function page() {
   const { reels, setOpenShareModal } = useContext(ContextData);
   const videoRefs = useRef({});
   const buttonRefs = useRef({});
+  const likeRefs = useRef({});
   const [shareUrl, setShareUrl] = useState("");
 
   useEffect(() => {
@@ -86,6 +87,16 @@ function page() {
   const handleShareOpen = (event) => {
     event.stopPropagation();
     setOpenShareModal(true);
+  };
+
+  const handleLike = (id) => {
+    if (videoRefs.current[id]) {
+      const video = videoRefs.current[id];
+      video.liked = !video.liked;
+      if (likeRefs.current[id]) {
+        likeRefs.current[id].textContent = video.liked ? "Liked" : "Like";
+      }
+    }
   };
 
   return (
@@ -169,7 +180,17 @@ function page() {
                 </Link>
               </motion.div>
               <div className="flex flex-col gap-2 z-50 bottom-36 right-6 absolute">
-                <button>Like</button>
+                <button
+                  ref={(currentButton) =>
+                    (likeRefs.current[id] = currentButton)
+                  }
+                  onClick={(event) => {
+                    event.stopPropagation();
+                    handleLike(id);
+                  }}
+                >
+                  Like
+                </button>
                 <button onClick={handleShareOpen}>
                   <Image
                     src={share}
