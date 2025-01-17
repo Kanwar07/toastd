@@ -76,31 +76,39 @@ function page() {
 
       if (likeRefs.current[id]) {
         likeRefs.current[id].textContent = video.liked ? "Liked" : "Like";
-
-        if (typeof window !== "undefined") {
-          if (video.liked) {
-            const animationContainer = document.createElement("div");
-            animationContainer.className =
-              "absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[100px] h-[100px] z-50";
-            document.body.appendChild(animationContainer);
-
-            const animation = lottie.loadAnimation({
-              container: animationContainer,
-              renderer: "svg",
-              loop: false,
-              autoplay: true,
-              animationData: likeAnimation,
-            });
-
-            animation.addEventListener("complete", () => {
-              animation.destroy();
-              animationContainer.remove();
-            });
-          }
-        }
       }
     }
   };
+
+  useEffect(() => {
+    const handleAnimation = (id) => {
+      if (videoRefs.current[id] && videoRefs.current[id].liked) {
+        const animationContainer = document.createElement("div");
+        animationContainer.className =
+          "absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[100px] h-[100px] z-50";
+        document.body.appendChild(animationContainer);
+
+        const animation = lottie.loadAnimation({
+          container: animationContainer,
+          renderer: "svg",
+          loop: false,
+          autoplay: true,
+          animationData: likeAnimation,
+        });
+
+        animation.addEventListener("complete", () => {
+          animation.destroy();
+          animationContainer.remove();
+        });
+      }
+    };
+
+    Object.keys(videoRefs.current).forEach((id) => {
+      if (videoRefs.current[id].liked) {
+        handleAnimation(id);
+      }
+    });
+  }, []);
 
   const title = "Check this out!";
 
