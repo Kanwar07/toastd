@@ -8,8 +8,6 @@ import Image from "next/image";
 import { motion } from "framer-motion";
 import ShareModal from "../components/ShareModal";
 import share from "../assets/share.svg";
-import lottie from "lottie-web";
-import likeAnimation from "../assets/like.json";
 
 function page() {
   const { reels, setOpenShareModal } = useContext(ContextData);
